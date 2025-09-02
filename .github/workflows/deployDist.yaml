@@ -22,7 +22,7 @@ jobs:
           npm  ci
       - name: Run Test Cases
         run: |
-          npm run test
+          npm  test
 
           # run: |
           #   echo 'Cloning repository...'
