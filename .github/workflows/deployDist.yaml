@@ -1,33 +1,43 @@
 name: Deploy Dist
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches:
+      - main
+      - "features/*"
+    paths-ignore:
+      - "README.md"
+      - "/.github/workflows/**"
+  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get clone on remote machines
+      - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Install Nodejs
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: print node version
-        run: |
-          echo "Node version:"
-          node -v
-      - name: Caching Dependencies
+      - name: Print Node.js version
+        run: node -v
+
+      - name: Cache node_modules
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      - name: Install Dependencies
-        run: |
-          npm  ci
-      - name: Run Test Cases
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run test cases
         run: npm run test
 
   deploy:
@@ -35,29 +45,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get clone on remote machine for Deployment
+      - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Install Nodejs
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: print node version
-        run: |
-          echo "Node version:"
-          node -v
+      - name: Print Node.js version
+        run: node -v
 
-      - name: Caching Dependencies
+      - name: Cache node_modules
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      - name: Install Dependencies
-        run: |
-          npm  ci
-      - name: Build Project
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
         run: npm run build
+
       - name: Deploy
         run: echo 'Deployed Successfully'
