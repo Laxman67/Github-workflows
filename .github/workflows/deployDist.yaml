@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get clone on remote machine
+      - name: Get clone on remote machines
         uses: actions/checkout@v5
 
       - name: Install Nodejs
