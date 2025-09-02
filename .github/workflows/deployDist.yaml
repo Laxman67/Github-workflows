@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  Test:
     runs-on: ubuntu-latest
 
     steps:
@@ -39,9 +39,8 @@ jobs:
 
       - name: Run test cases
         run: npm run test
-
-  deploy:
-    needs: test
+  Build:
+    needs: Test
     runs-on: ubuntu-latest
 
     steps:
@@ -69,6 +68,26 @@ jobs:
 
       - name: Build project
         run: npm run build
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-files
+          path: dist
+
+  Deploy:
+    needs: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-files
+          path: dist
 
       - name: Deploy
         run: echo 'Deployed Successfully'
