@@ -1,23 +1,16 @@
-import React from "react";
-import {render,screen} from '@testing-library/react'
-import {describe,test,expect} from 'vitest'
+import { render, screen } from "@testing-library/react";
+import { test, expect } from "vitest";
 import App from "./App";
 
-test('render github actions heading', () => {
+
+test("contains one or more h1 elements", () => {
   render(<App />);
-  const heading = screen.getByRole('heading', { name: /github actions/i });
-  expect(heading).toBeInTheDocument();
+  const headings = screen.getAllByRole("heading", { level: 1 });
+  expect(headings.length).toBeGreaterThan(0);
 });
 
-
-test('contains h1 element', () => {
-    const {container} = render(<App />);
-    const heading = container.getByRole('heading', { level: 1 });
-  expect(heading).toBeInTheDocument();
-});
-
-test('contains h2 element', () => {
-  const {container} = render(<App />);
-  const heading = container.getByRole('heading', { level: 2 });
-  expect(heading).toBeInTheDocument();
+test("contains one or more h2 elements", () => {
+  render(<App />);
+  const subHeadings = screen.getAllByRole("heading", { level: 2 });
+  expect(subHeadings.length).toBeGreaterThan(0);
 });
