@@ -5,13 +5,16 @@ on: [push, workflow_dispatch]
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Get clone on remote machine
         uses: actions/checkout@v5
+
       - name: Install Nodejs
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+
       - name: print node version
         run: |
           echo "Node version:"
@@ -21,6 +24,4 @@ jobs:
         run: |
           npm  ci
       - name: Run Test Cases
-        run:
-          npm run test
-          #   git clone https://github.com/${{github.repository}}.git
+        run: npm run test
