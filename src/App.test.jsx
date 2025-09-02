@@ -12,5 +12,5 @@ test("contains one or more h1 elements", () => {
 test("contains one or more h2 elements", () => {
   render(<App />);
   const subHeadings = screen.getAllByRole("heading", { level: 2 });
-  expect(subHeadings.length).not.toBeGreaterThan(0);
+  expect(subHeadings.length).toBeGreaterThan(0);
 });
