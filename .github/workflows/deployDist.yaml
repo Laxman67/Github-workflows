@@ -21,10 +21,6 @@ jobs:
         run: |
           npm  ci
       - name: Run Test Cases
-        run: |
-          npm  test
-
-          # run: |
-          #   echo 'Cloning repository...'
-          #   echo "${{toJson(github) }}"
+        run:
+          npm run test
           #   git clone https://github.com/${{github.repository}}.git
