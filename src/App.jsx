@@ -5,6 +5,7 @@ function App() {
     <>
       <h1>Github Actions</h1>
       <h2>Complete Course with 2 Project</h2>{" "}
+      <h2>MERN Stack E-Commerce App</h2>
     </>
   );
 }
